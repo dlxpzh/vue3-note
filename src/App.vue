@@ -30,44 +30,48 @@ export default {
 
 <style lang="less" scoped>
 .app {
-	position: relative;
-	width: 100%;
-	height: 100%;
 	.app-top {
-		position: absolute;
+		position: fixed;
 		top: 0;
 		left: 0;
 		right: 0;
-		padding: 20px 200px;
+		padding: 10px 100px;
 		box-shadow: 0px 4px 16px 0px rgb(15 47 124 / 20%);
 	}
 	.app-content {
 		position: absolute;
-		top: 100px;
+		top: 80px;
 		left: 0;
-		right: 0;
-		bottom: 0;
-		display: flex;
-		justify-content: center;
-		height: 890px;
+		bottom: 8%;
+		width: 100%;
 		.left {
-			flex: 1;
+			position: absolute;
+			top: 0;
+			left: 0;
+			bottom: 0;
+			width: 160px;
 			background: #909bd173;
+			box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
 		}
 		.content {
-			position: relative;
-			flex: 4;
-			padding: 50px 100px;
+			position: absolute;
+			top: 0;
+			left: 200px;
+			right: 0;
+			bottom: 0;
+			padding: 20px 30px;
+			overflow-y: auto;
 		}
 	}
 	.app-footer {
 		position: fixed;
 		left: 0;
+		right: 0;
 		bottom: 0;
 		text-align: center;
 		width: 100%;
-		height: 60px;
-		line-height: 40px;
+		height: 8%;
+		line-height: 20px;
 		font-size: 13px;
 		color: #aaa;
 		background: #333;

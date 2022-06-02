@@ -1,18 +1,17 @@
 <template>
 	<div class="page">
 		<div class="user">
-			<img class="avatar" ref="img" :src="user.avatar" width="100" />
+			<img class="avatar" ref="img" :src="user.avatar" width="50" />
 			<div class="info">
 				<p class="name">{{ user.name }}</p>
 				<p class="alias">笔名: {{ user.alias }}</p>
 				<p class="adage">低姿态的心态，写高姿态的代码</p>
-				<p class="adage">人生不是关于如何挺过暴风雨，而是关于如何在暴风雨中翩翩起舞</p>
 			</div>
 		</div>
 		<div class="time">
-			<h2>{{ dateTime.date }}</h2>
-			<h3>{{ dateTime.week }}</h3>
-			<h3>{{ time }}</h3>
+			<div class="date">{{ dateTime.date }}</div>
+			<div class="date">{{ dateTime.week }}</div>
+			<div class="date">{{ time }}</div>
 			<h4 class="address">{{ dateTime.address }}</h4>
 		</div>
 	</div>
@@ -30,7 +29,7 @@ export default defineComponent({
 		});
 		const weeks = ['日', '一', '二', '三', '四', '五', '六'];
 		const dateTime = {
-			date: dayjs().format('YYYY-MM-DD'),
+			date: dayjs().format('YYYY/MM/DD'),
 			week: '星期' + weeks[dayjs().day()],
 			address: '中国·深圳',
 		};
@@ -51,30 +50,40 @@ export default defineComponent({
 <style lang="less" scoped>
 .page {
 	display: flex;
-	flex-direction: column;
 	height: 100%;
+	flex-direction: column;
+	overflow: hidden;
+	text-align: center;
 	.user {
-		flex: 3;
-		padding-top: 20px;
-		text-align: center;
+		position: absolute;
+		top: 20px;
+		left: 0;
+		right: 0;
 		.info {
 			.name {
-				font-size: 22px;
+				font-size: 20px;
 			}
 			.alias {
-				font-size: 14px;
+				font-size: 12px;
 			}
 			.adage {
-				margin: 40px 0;
-				line-height: 30px;
+				font-size: 14px;
+				line-height: 22px;
 				border-bottom: 1px solid rgb(155, 105, 170);
 			}
 		}
 	}
 	.time {
-		flex: 1;
-		text-align: center;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
 		color: #333;
+		.date {
+			height: 26px;
+			line-height: 26px;
+			font-family: Arial, Helvetica, sans-serif;
+		}
 		.address {
 			color: #888;
 		}
