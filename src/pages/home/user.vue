@@ -82,6 +82,7 @@ export default defineComponent({
 		.date {
 			height: 26px;
 			line-height: 26px;
+			font-size: 14px;
 			font-family: Arial, Helvetica, sans-serif;
 		}
 		.address {

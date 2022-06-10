@@ -1,40 +1,39 @@
 <script lang="ts">
-import { defineComponent, reactive } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
+import { Search } from '@element-plus/icons-vue';
 import { useRouter } from 'vue-router';
+import { docList } from './data.js';
 export default defineComponent({
 	name: 'doc',
 	setup() {
-		const list = reactive([
-			{
-				name: 'typescript文档',
-				id: 'typescript',
-				date: '2022.04.22',
-			},
-			{
-				name: 'less指令扩展',
-				id: 'less',
-				date: '2022.02.15',
-			},
-			{
-				name: '前端性能优化专项',
-				id: 'optimize',
-				date: '2021.12.23',
-			},
-			{
-				name: '从Chrome Performance看页面性能分析',
-				id: 'chrome-analyze',
-				date: '2021.10.14',
-			},
-		]);
-		const activeId = 'typescript';
 		const router = useRouter();
+		// 搜索过滤
+		const keyWord = ref();
+		const list = computed(() => {
+			if (!keyWord.value) {
+				return docList;
+			}
+			const result: any[] = [];
+			docList.forEach(i => {
+				if (i.name.includes(keyWord.value)) {
+					result.push(i);
+				}
+			});
+			return result;
+		});
+		// 点击项
+		let activeId = ref('typescript');
+		router.replace({ path: '/doc/' + activeId.value });
 		const handleSelect = (key: string) => {
-			router.replace({ path: '/' + key });
+			router.replace({ path: '/doc/' + key });
+			activeId.value = key;
 		};
 		return {
 			list,
 			activeId,
 			handleSelect,
+			keyWord,
+			Search,
 		};
 	},
 });
@@ -42,15 +41,21 @@ export default defineComponent({
 
 <template>
 	<div class="main">
-		<div class="menu">
-			<el-menu :default-active="activeId" class="menu" @select="handleSelect">
-				<el-menu-item v-for="item in list" :key="item.id" :index="item.id">
-					<h3 class="name">
-						<el-icon><Document /></el-icon>{{ item.name }}
-					</h3>
-					<p class="date">{{ item.date }}</p>
-				</el-menu-item>
-			</el-menu>
+		<div class="left">
+			<div class="filter">
+				<el-input class="input" size="default" v-model="keyWord" :prefix-icon="Search" placeholder="搜索全部文档" />
+			</div>
+			<ul class="menu">
+				<li v-for="item in list" :key="item.id" :index="item.id" :class="{ active: activeId === item.id }" @click="handleSelect(item.id)">
+					<div class="title">
+						<el-icon class="icon"><Document /></el-icon>
+						<el-tooltip :content="item.name">
+							<span class="name">{{ item.name }}</span>
+						</el-tooltip>
+					</div>
+					<div class="date">{{ item.date }}</div>
+				</li>
+			</ul>
 		</div>
 		<div class="content">
 			<router-view></router-view>
@@ -60,35 +65,72 @@ export default defineComponent({
 
 <style lang="less" scoped>
 .main {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
+	display: flex;
+	height: 100%;
 	overflow: auto;
-	.menu {
-		position: absolute;
-		top: 0;
-		left: 0;
-		bottom: 0;
-		padding: 24px 0;
-		width: 280px;
+	.left {
+		flex: 1;
 		overflow: auto;
 		border-right: 1px solid #ccc;
-		.name {
-			font-size: 16px;
+		.filter {
+			margin: 20px 10px;
+			.input {
+				/deep/ .el-input__wrapper {
+					border-radius: 16px;
+				}
+			}
 		}
-		.date {
-			color: #ccc;
+		.menu {
+			padding-left: 0;
+			margin: 0;
+			li {
+				padding: 8px 16px;
+				list-style: none;
+				border-bottom: 1px solid #eee;
+				cursor: pointer;
+				&:hover {
+					background: #eee;
+				}
+				&.active {
+					background: #c8c8c83d;
+					.name {
+						color: #2f74ed;
+					}
+				}
+				.title {
+					display: inline-flex;
+					justify-content: center;
+					align-items: center;
+					height: 100%;
+					margin: 0;
+					height: 36px;
+					line-height: 36px;
+					font-size: 14px;
+					.name {
+						width: 160px;
+						white-space: nowrap;
+						overflow: hidden;
+						text-overflow: ellipsis;
+					}
+					.icon {
+						font-size: 18px;
+						padding-right: 10px;
+						color: #2f74ed;
+					}
+				}
+				.date {
+					height: 20px;
+					line-height: 20px;
+					padding-left: 28px;
+					font-size: 12px;
+					color: #bbb;
+				}
+			}
 		}
 	}
 	.content {
-		position: absolute;
-		top: 0;
-		left: 280px;
-		right: 0;
-		bottom: 0;
-		padding: 24px 224px 24px 24px;
+		flex: 3;
+		padding: 20px;
 		overflow: auto;
 	}
 }

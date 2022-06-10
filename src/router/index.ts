@@ -19,21 +19,25 @@ const routes = [
             {
                 path: 'typescript',
                 name: 'typescript',
+                // @ts-ignore
                 component: () => import('../pages/doc/typescript.md')
             },
             {
                 path: 'less',
                 name: 'less',
+                // @ts-ignore
                 component: () => import('../pages/doc/less.md')
             },
             {
-                path: 'less',
-                name: 'less',
+                path: 'optimize',
+                name: 'optimize',
+                // @ts-ignore
                 component: () => import('../pages/doc/optimize.md')
             },
             {
-                path: 'less',
-                name: 'less',
+                path: 'chrome-analyze',
+                name: 'chrome-analyze',
+                // @ts-ignore
                 component: () => import('../pages/doc/chrome-analyze.md')
             },
         ]
@@ -41,7 +45,15 @@ const routes = [
     {
         path: '/note',
         name: 'note',
-        component: () => import('../pages/note/index.vue')
+        component: () => import('../pages/note/index.vue'),
+        children: [
+            {
+                path: 'question',
+                name: 'question',
+                // @ts-ignore
+                component: () => import('../pages/note/question.md')
+            },
+        ]
     },
 ]
 
