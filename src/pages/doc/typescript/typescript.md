@@ -15,7 +15,7 @@
 
 > TypeScript和JavaScript都允许隐式类型转换，所以都是弱类型
 
-```
+```js
 // 例如以下代码在JavaScript和TypeScript都会正常打印
 // 因为运行时数字1会隐式类型转换为字符串'1'
 console.log(1+'1') // '11'
@@ -32,7 +32,7 @@ console.log(1+'1') // '11'
 
 > any：任意类型，可以赋值给任意类型，可以进行任何操作，少用。***如果定义的时候没有赋值，则默认推断成any***
 
-```
+```js
 let a;
 a = 'fdd';
 a = 1; // 不会报错
@@ -41,12 +41,12 @@ a = 1; // 不会报错
 
 > Tuple：元组，和数组类似，是已知元素数量和类型的严格版数组
 
-```
+```js
 let fdd: [string, number] = ['法大大', 7];
 ```
 > Enum：枚举，取值被限定在一定范围内的场景，用enum关键字定义
 
-```
+```js
 enum Directions = {up, down = 3, left, right}
 // 默认从0开始赋值
 console.log(Directions.up === 0)
@@ -56,7 +56,7 @@ console.log(Directions[0] === up)
 #### 4、重点语法
 ##### 接口interface：定义对象的类型
 
-```
+```js
 interface Person {
     name: string;
     age?: number; // 可选属性，可为number或undefined
@@ -82,7 +82,7 @@ interface VipPerson extends Person {
 
 ##### 类class：定义一件事物的抽象特点，包括它的属性和方法
 
-```
+```js
 class Animal {
     // 访问限定符
     public name; // 公有属性，默认值
@@ -114,14 +114,14 @@ class Cat extends Animal {
     
 ##### 类型别名type：给类型起个新名字
 
-```
+```js
 // 可以理解为一个新的类型
 type fdd = number | string; // 联合类型
 let company: fdd; // 相当于 let company: number | string
 ```
 ##### 泛型Generic：不预先指定类型，只用字符占用，使用时再指定类型
 
-```
+```js
 // 在函数名后面声明泛型变量T，会捕获传参的类型，供函数使用
 function add1<T>(num: T): T {
     return num + 1;

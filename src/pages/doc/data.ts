@@ -1,4 +1,5 @@
-export const docList = [
+import { IDocParams } from './doc.type';
+export const data: IDocParams[] = [
 	{
 		name: 'Typescript文档',
 		id: 'typescript',

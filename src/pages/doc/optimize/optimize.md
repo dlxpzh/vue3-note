@@ -18,7 +18,7 @@
 ##### 3、响应式图片
 > 通过**media**属性设置根据屏幕大小自动加载合适的图片
 
-```
+```js
 @media (min-width: 769px) {
     .bg {
         background-image: url(bg1080.jpg);
@@ -48,7 +48,7 @@
 - 前端压缩：**compression-webpack-plugin** 
 - 服务器压缩：**Nginx gzip** 或 **Node compression**
 > 原理：前端打包启用compression-webpack-plugin插件压缩静态资源，生成gz格式的文件；或服务端在Nginx开启Gzip压缩，则文件响应头Response Headers会有Content-Encoding: gzip的标识告诉浏览器去解析gzip文件，目前主流浏览器都支持解析gzip页面
-```
+```js
 // 基于node
 var compression = require('compression')
 var app = express();

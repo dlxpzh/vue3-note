@@ -45,7 +45,7 @@ export default defineComponent({
 			<ul class="menu">
 				<li v-for="item in list" :key="item.id" :index="item.id" :class="{ active: activeId === item.id }" @click="handleSelect(item.id)">
 					<div class="title">
-						<el-icon class="icon"><Notebook /></el-icon>
+						<el-icon class="icon"><Edit /></el-icon>
 						<el-tooltip :content="item.name">
 							<span class="name">{{ item.name }}</span>
 						</el-tooltip>

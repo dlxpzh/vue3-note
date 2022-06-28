@@ -1,7 +1,7 @@
 ## less文件 @import css文件时，打包后引用无效
 
 #### 现象：op-web-ui里icon.less引用iconfont.css，在op-web项目不能直接获取
-```
+```js
 // op-web-ui icon.less
 
 @import 'iconfont/iconfont.css';
@@ -26,14 +26,14 @@
 
 #### 解决：less提供了相关扩展，@import后跟上指令 (less) 即可解决
 
-```
+```js
 @import (less) 'iconfont/iconfont.css';
 ```
 #### *相关资料文档
 
 > 为了在将Less文件编译生成CSS文件时，提高对外部文件的操作灵活性，还为@import指令提供了一些配置项
 
-```
+```js
 @import (keyword) "filename";
 ```
 

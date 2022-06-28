@@ -4,9 +4,13 @@ import { resolve } from 'path';
 import viteMarkdown from 'vite-plugin-md';
 
 export default defineConfig({
-  plugins: [vue({
-    include: [/\.vue$/, /\.md$/],
-  }), viteMarkdown()],
+  plugins: [
+    vue({
+      include: [/\.vue$/, /\.md$/],
+    }),
+    // vite支持markdown文件显示
+    viteMarkdown()
+  ],
 
   resolve: {
     alias: [{

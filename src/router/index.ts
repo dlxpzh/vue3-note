@@ -9,7 +9,24 @@ const routes = [
     {
         path: '/home',
         name: 'home',
-        component: () => import('../pages/home/index.vue')
+        component: () => import('../pages/home/index.vue'),
+        children: [
+            {
+                path: 'introduce',
+                name: 'introduce',
+                component: () => import('../pages/home/introduce.vue'),
+            },
+            {
+                path: 'map',
+                name: 'map',
+                component: () => import('../pages/home/map.vue'),
+            },
+            {
+                path: 'weather',
+                name: 'weather',
+                component: () => import('../pages/home/weather.vue'),
+            }
+        ]
     },
     {
         path: '/doc',
@@ -17,28 +34,34 @@ const routes = [
         component: () => import('../pages/doc/index.vue'),
         children: [
             {
+                path: 'add',
+                name: 'add',
+                // @ts-ignore
+                component: () => import('../pages/doc/add.vue')
+            },
+            {
                 path: 'typescript',
                 name: 'typescript',
                 // @ts-ignore
-                component: () => import('../pages/doc/typescript.md')
+                component: () => import('../pages/doc/typescript/index.vue')
             },
             {
                 path: 'less',
                 name: 'less',
                 // @ts-ignore
-                component: () => import('../pages/doc/less.md')
+                component: () => import('../pages/doc/less/index.vue')
             },
             {
                 path: 'optimize',
                 name: 'optimize',
                 // @ts-ignore
-                component: () => import('../pages/doc/optimize.md')
+                component: () => import('../pages/doc/optimize/index.vue')
             },
             {
                 path: 'chrome-analyze',
                 name: 'chrome-analyze',
                 // @ts-ignore
-                component: () => import('../pages/doc/chrome-analyze.md')
+                component: () => import('../pages/doc/analyze/index.vue')
             },
         ]
     },
