@@ -1,7 +1,7 @@
 <script lang="ts">
-import { computed, defineComponent, ref, reactive, onMounted } from 'vue';
+import { computed, defineComponent, ref, reactive, onMounted, provide } from 'vue';
 import { Search } from '@element-plus/icons-vue';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { data } from './data.js';
 import docHead from './docHead.vue';
 import dayjs from 'dayjs';
@@ -12,10 +12,11 @@ export default defineComponent({
 	},
 	setup() {
 		const router = useRouter();
+		const route = useRoute();
 		// 文档列表增加响应式控制
 		const docList = reactive(data);
 		// 默认激活项
-		let activeItem = ref('');
+		let activeItem = ref();
 		// 点击左侧项
 		const handleSelect = (item: any) => {
 			router.replace({ path: '/doc/' + item.id });
@@ -46,22 +47,24 @@ export default defineComponent({
 			}
 		};
 		// 加星
-		const star = (val: boolean) => {
+		const star = (val: boolean, id: string) => {
 			if (activeItem.value.id === 'add') {
 				firstFile[0].isStar = val;
 			} else {
-				const item = docList.find(i => i.id === activeItem.value.id);
+				const handleId = id || activeItem.value.id;
+				const item = docList.find(i => i.id === handleId);
 				if (item) {
 					item.isStar = val;
 				}
 			}
 		};
 		// 置顶
-		const toTop = (val: string) => {
+		const toTop = (val: string, id: string) => {
 			if (activeItem.value.id === 'add') {
 				firstFile[0].isTop = val;
 			} else {
-				const index = docList.findIndex(i => i.id === activeItem.value.id);
+				const handleId = id || activeItem.value.id;
+				const index = docList.findIndex(i => i.id === handleId);
 				// 先置顶处理
 				const item: any = docList.splice(index, 1)[0];
 				docList.unshift(item);
@@ -74,6 +77,14 @@ export default defineComponent({
 		// 删除
 		const del = (id: string) => {
 			console.log('del: ', id);
+		};
+		const edit = id => {
+			router.replace({
+				name: route.name,
+				query: {
+					id: id,
+				},
+			});
 		};
 		// 获取实际文件列表，包括新增文件、搜索过滤等
 		const keyWord = ref();
@@ -101,6 +112,10 @@ export default defineComponent({
 			style.width = nameWidth.value - 70 + 'px';
 			return style;
 		});
+		// 改变popover组件的默认min-width
+		const popperStyle = {
+			'min-width': '100px',
+		};
 		return {
 			list,
 			activeItem,
@@ -113,8 +128,10 @@ export default defineComponent({
 			star,
 			toTop,
 			del,
+			edit,
 			changeWidth,
 			leftRef,
+			popperStyle,
 		};
 	},
 });
@@ -139,13 +156,28 @@ export default defineComponent({
 							<el-icon v-if="item.isStar" class="icon-star"><StarFilled /></el-icon>
 						</div>
 						<div class="date">{{ item.date }}</div>
+						<div @click.stop>
+							<el-popover placement="right" popperClass="popover" :popperStyle="popperStyle" :width="100" trigger="click">
+								<template #reference>
+									<div class="operate-btn">...</div>
+								</template>
+								<div class="operate-content">
+									<div class="btn" @click="star(!item.isStar, item.id)">
+										<el-icon><StarFilled /></el-icon>{{ item.isStar ? '取消加星' : '加星' }}
+									</div>
+									<div class="btn" @click="toTop(!item.isTop, item.id)">
+										<el-icon><Upload /></el-icon>{{ item.isTop ? '取消置顶' : '置顶' }}
+									</div>
+								</div>
+							</el-popover>
+						</div>
 					</li>
 				</ul>
 			</div>
 		</template>
 		<template v-slot:right>
 			<div class="content">
-				<docHead class="head" :data="activeItem" @updateMdName="updateMdName" @star="star" @toTop="toTop" @del="del"></docHead>
+				<docHead class="head" :data="activeItem" @updateMdName="updateMdName" @star="star" @toTop="toTop" @del="del" @edit="edit"></docHead>
 				<router-view class="view"></router-view>
 			</div>
 		</template>
@@ -180,6 +212,13 @@ export default defineComponent({
 				cursor: pointer;
 				&:hover {
 					background: #eee;
+					.operate-btn {
+						visibility: visible;
+					}
+					.top,
+					.icon-star {
+						display: none;
+					}
 				}
 				&.active {
 					background: #c8c8c83d;
@@ -231,6 +270,24 @@ export default defineComponent({
 					font-size: 12px;
 					color: #bbb;
 				}
+				.operate-btn {
+					position: absolute;
+					top: 17px;
+					right: 10px;
+					width: 18px;
+					text-align: center;
+					height: 18px;
+					line-height: 9px;
+					color: #999;
+					visibility: hidden;
+					&:hover {
+						background: #ddd;
+						.top,
+						.icon-star {
+							display: none;
+						}
+					}
+				}
 			}
 		}
 	}
@@ -249,6 +306,25 @@ export default defineComponent({
 		}
 		.view {
 			overflow: auto;
+		}
+	}
+}
+.popover {
+	min-width: 60px;
+	.operate-content {
+		.btn {
+			width: 100px;
+			height: 26px;
+			line-height: 26px;
+			cursor: pointer;
+			color: #2f74ed;
+			&:hover {
+				background: rgba(#2f74ed, 0.1);
+			}
+			.el-icon {
+				padding-right: 6px;
+				vertical-align: -0.13em;
+			}
 		}
 	}
 }

@@ -54,8 +54,11 @@ export default defineComponent({
 		);
 		const handleSelect = (key: string) => {
 			if (key === 'git') {
-				window.open('https://github.com/dlxpzh');
+				window.open('https://github.com/dlxpzh/vue3-typescript');
 			} else {
+				if (route.path.includes(key)) {
+					return;
+				}
 				router.replace({ path: '/' + key });
 			}
 		};

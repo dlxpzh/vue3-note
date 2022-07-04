@@ -4,6 +4,7 @@
 			<el-input class="input" v-model="title" @input="updateMdName" size="large"></el-input>
 		</div>
 		<div class="btn">
+			<!-- <el-button v-if="data.id !== 'add'" size="large" type="primary" icon="Edit" @click="edit">编辑</el-button> -->
 			<el-button size="large" type="primary" icon="StarFilled" @click="star" class="star">{{ isStar ? '取消加星' : '加星' }}</el-button>
 			<el-button size="large" type="primary" icon="Upload" @click="toTop">{{ isTop ? '取消置顶' : '置顶' }}</el-button>
 			<el-button size="large" type="danger" icon="Delete" @click="del">删除</el-button>
@@ -14,7 +15,7 @@
 import { defineComponent, reactive, ref, watch } from 'vue';
 export default defineComponent({
 	name: 'doc-head',
-	emits: ['updateMdName', 'star', 'toTop', 'del'],
+	emits: ['updateMdName', 'star', 'toTop', 'del', 'edit'],
 	props: {
 		data: {
 			type: Object,
@@ -29,7 +30,6 @@ export default defineComponent({
 		watch(
 			() => props.data,
 			(newVal: any) => {
-				console.log(newVal);
 				title.value = newVal.name;
 				isStar.value = newVal.isStar;
 				isTop.value = newVal.isTop;
@@ -56,6 +56,9 @@ export default defineComponent({
 		const del = () => {
 			emit('del', item.id);
 		};
+		const edit = () => {
+			emit('edit', item.id);
+		};
 		return {
 			title,
 			isStar,
@@ -64,6 +67,7 @@ export default defineComponent({
 			star,
 			toTop,
 			del,
+			edit,
 		};
 	},
 });

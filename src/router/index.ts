@@ -36,31 +36,26 @@ const routes = [
             {
                 path: 'add',
                 name: 'add',
-                // @ts-ignore
                 component: () => import('../pages/doc/add.vue')
             },
             {
                 path: 'typescript',
                 name: 'typescript',
-                // @ts-ignore
                 component: () => import('../pages/doc/typescript/index.vue')
             },
             {
                 path: 'less',
                 name: 'less',
-                // @ts-ignore
                 component: () => import('../pages/doc/less/index.vue')
             },
             {
                 path: 'optimize',
                 name: 'optimize',
-                // @ts-ignore
                 component: () => import('../pages/doc/optimize/index.vue')
             },
             {
                 path: 'chrome-analyze',
                 name: 'chrome-analyze',
-                // @ts-ignore
                 component: () => import('../pages/doc/analyze/index.vue')
             },
         ]

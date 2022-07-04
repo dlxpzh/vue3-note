@@ -87,6 +87,20 @@ export default defineComponent({
 					weather.value.airData = airQuality(res.data.air);
 				});
 		};
+		const findWeekOfTenDay = () => {
+			let result = [],
+				date = dayjs().startOf('year');
+			const weeks = ['日', '一', '二', '三', '四', '五', '六'];
+			while (dayjs(date).isBefore(dayjs().endOf('year'), 'date')) {
+				if (date.$D === 10) {
+					const week = weeks[date.day()];
+					result.push(`日期${date.format('YYYY-MM-DD')}是星期${week}`);
+				}
+				date = date.add(1, 'day');
+			}
+			return result;
+		};
+		console.log(findWeekOfTenDay());
 		return {
 			user,
 			dateTime,
@@ -145,7 +159,6 @@ export default defineComponent({
 	}
 }
 .popover {
-	background: red;
 	.weather {
 		.name {
 			padding-right: 8px;
@@ -158,7 +171,7 @@ export default defineComponent({
 			}
 			.wea-name {
 				position: absolute;
-				top: 5px;
+				top: 3px;
 				left: 36px;
 				font-size: 16px;
 			}

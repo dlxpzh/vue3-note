@@ -14,7 +14,7 @@ export default defineComponent({
 				return docList;
 			}
 			const result = docList.filter(i => {
-				i.name.includes(keyWord.value);
+				return i.name.includes(keyWord.value);
 			});
 			return result;
 		});
