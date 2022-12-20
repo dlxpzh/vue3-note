@@ -12,13 +12,13 @@ export default defineComponent({
 	setup() {
 		echarts.use([TitleComponent, ToolboxComponent, TooltipComponent, VisualMapComponent, GeoComponent, MapChart, CanvasRenderer]);
 		var ROOT_PATH = 'https://fastly.jsdelivr.net/gh/apache/echarts-website@asf-site/examples';
-		const echartsChina = ref(null);
+		const echartsChina = ref();
 		const instance = getCurrentInstance();
-		const $axios = instance.appContext.config.globalProperties.$axios;
+		const $axios = instance?.appContext.config.globalProperties.$axios;
 		onMounted(() => {
 			const myChart = echarts.init(echartsChina.value);
 			myChart.showLoading();
-			$axios.get(ROOT_PATH + '/data/asset/geo/HK.json').then(function (geoJson) {
+			$axios.get(ROOT_PATH + '/data/asset/geo/HK.json').then(function (geoJson: any) {
 				myChart.hideLoading();
 				echarts.registerMap('HK', geoJson.data);
 				myChart.setOption({

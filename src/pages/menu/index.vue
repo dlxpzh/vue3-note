@@ -44,7 +44,9 @@ export default defineComponent({
 		 * 或者
 		 * 模板里直接取$route.name
 		 */
-		let activeId: any = ref('');
+		let activeId: any = ref('home');
+		// 默认vue项目页
+		router.replace({ path: '/home/introduce' });
 		watch(
 			() => route.path,
 			newPath => {

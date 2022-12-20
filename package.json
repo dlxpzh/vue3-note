@@ -2,6 +2,8 @@
   "name": "vue3-project",
   "private": true,
   "version": "1.0.0",
+  "author": "dlxpzh",
+  "description": "a simple document note project",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
@@ -16,6 +18,7 @@
     "echarts": "^5.3.3",
     "element-plus": "^2.2.0",
     "less": "^4.1.2",
+    "prismjs": "^1.29.0",
     "vue": "^3.2.25",
     "vue-router": "^4.0.13",
     "vuex": "^4.0.2"

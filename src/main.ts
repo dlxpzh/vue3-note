@@ -18,22 +18,22 @@ import split from './components/split';
 
 // markdown编辑
 VueMarkdownEditor.use(vuepressTheme, createCopyCodePlugin(), {
-    Prism,
+	Prism,
 });
 // markdown预览
 VMdPreview.use(vuepressTheme, {
-    Prism
+	Prism,
 });
 const app = createApp(App);
-app.use(router)
+app.use(router);
 app.use(VueMarkdownEditor);
 app.use(VMdPreview);
 app.use(split as any);
-app.use(store, key).mount('#app');
 app.config.globalProperties.$axios = axios;
 // elementUI
-app.use(ElementPlus, { size: 'small', zIndex: '3000' })
+app.use(ElementPlus, { size: 'small', zIndex: '3000' });
+app.use(store, key).mount('#app');
 // el-icon处理
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-    app.component(key, component)
+	app.component(key, component);
 }

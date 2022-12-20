@@ -58,6 +58,16 @@ const routes = [
 				name: 'chrome-analyze',
 				component: () => import('../pages/doc/analyze/index.vue'),
 			},
+			{
+				path: 'npm',
+				name: 'npm',
+				component: () => import('../pages/doc/npm/index.vue'),
+			},
+			{
+				path: 'wxpay',
+				name: 'wxpay',
+				component: () => import('../pages/doc/wxpay/index.vue'),
+			},
 		],
 	},
 	{

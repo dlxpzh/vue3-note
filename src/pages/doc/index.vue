@@ -2,7 +2,7 @@
 import { computed, defineComponent, ref, reactive, onMounted, provide } from 'vue';
 import { Search } from '@element-plus/icons-vue';
 import { useRouter, useRoute } from 'vue-router';
-import { data } from './data.js';
+import { data } from './data';
 import docHead from './docHead.vue';
 import dayjs from 'dayjs';
 export default defineComponent({
@@ -80,7 +80,7 @@ export default defineComponent({
 		};
 		const edit = (id: string) => {
 			router.replace({
-				name: route.name,
+				name: route.name as string,
 				query: {
 					id: id,
 				},

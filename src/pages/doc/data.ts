@@ -20,4 +20,14 @@ export const data: IDocParams[] = [
 		id: 'chrome-analyze',
 		date: '2021.10.14',
 	},
+	{
+		name: 'npm介绍及yarn、pnpm对比',
+		id: 'npm',
+		date: '2021.10.14',
+	},
+	{
+		name: '微信、支付宝支付',
+		id: 'wxpay',
+		date: '2021.10.14',
+	},
 ];

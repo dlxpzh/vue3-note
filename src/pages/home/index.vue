@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import User from './user.vue';
-import { computed, defineComponent, reactive, watch, provide } from 'vue';
+import { defineComponent, provide } from 'vue';
 import { useRouter } from 'vue-router';
 export default defineComponent({
 	components: {
@@ -22,7 +22,7 @@ export default defineComponent({
 		// 默认vue项目页
 		router.replace({ path: '/home/introduce' });
 		// 跳转路由
-		const toUrl = id => {
+		const toUrl = (id: string) => {
 			router.replace({ path: '/home/' + id });
 		};
 		provide('toUrl', toUrl);
