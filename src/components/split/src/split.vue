@@ -35,18 +35,19 @@ export default defineComponent({
 		mode: {
 			type: String,
 			default: 'vertical',
-			validator: value => ['horizontal', 'vertical'].includes(value),
+			validator: (value: string) => ['horizontal', 'vertical'].includes(value),
 		},
 		collapse: {
 			type: String,
-			validator: value => ['left', 'top', 'right', 'bottom'].includes(value),
+			default: 'left',
+			validator: (value: string) => ['left', 'top', 'right', 'bottom'].includes(value),
 		},
 		showCollapse: Boolean,
 		// 像素或者百分比
 		value: {
-			type: [Number, String],
+			type: String,
 			default: '50%',
-			validator: value => /^([0-9]+)(%|px)?$/.test(value),
+			validator: (value: string) => /^([0-9]+)(%|px)?$/.test(value),
 		},
 		visible: {
 			type: Boolean,
@@ -54,19 +55,19 @@ export default defineComponent({
 		},
 		// 最小像素或百分比
 		min: {
-			type: [Number, String],
+			type: String,
 			default: '10%',
-			validator: value => /^([0-9]+)(%|px)?$/.test(value),
+			validator: (value: string) => /^([0-9]+)(%|px)?$/.test(value),
 		},
 		// 最大像素或百分比
 		max: {
-			type: [Number, String],
+			type: String,
 			default: '90%',
-			validator: value => /^([0-9]+)(%|px)?$/.test(value),
+			validator: (value: string) => /^([0-9]+)(%|px)?$/.test(value),
 		},
 	},
 	setup(props, { emit }) {
-		let curValue = ref(0);
+		let curValue = ref();
 		let curVisible = ref(false);
 		const splitRef = ref();
 		const referenceRef = ref();
@@ -76,11 +77,11 @@ export default defineComponent({
 		watchEffect(() => {
 			curVisible.value = props.visible;
 		});
-		const getClassName = (...arg) => {
+		const getClassName = (...arg: string[]) => {
 			return getComponentClass(name, ...arg);
 		};
 		const style = computed(() => {
-			let value = 0;
+			let value;
 			if (typeof curValue.value === 'number') {
 				value = curValue.value + 'px';
 			} else {
@@ -106,8 +107,8 @@ export default defineComponent({
 				}
 			}
 		});
-		const handleMouseDown = event => {
-			if (event.target.className !== getClassName('drag')) {
+		const handleMouseDown = (event: any) => {
+			if (event.target && event.target.className !== 'op-split_drag') {
 				return;
 			}
 			const target = referenceRef.value;
@@ -115,7 +116,7 @@ export default defineComponent({
 			mouseDown({
 				container: splitRef.value,
 				event,
-				handleMove: move => {
+				handleMove: (move: { x: number; y: number }) => {
 					const width = rect.width + move.x;
 					const height = rect.height + move.y;
 					if (props.mode === 'vertical') {
@@ -128,7 +129,7 @@ export default defineComponent({
 				},
 			});
 		};
-		const restrictToBounds = value => {
+		const restrictToBounds = (value: number) => {
 			let min = transformToNumber(props.min),
 				max = transformToNumber(props.max);
 			if (min && value < min) {
@@ -137,9 +138,9 @@ export default defineComponent({
 			if (max && max < value) {
 				return max;
 			}
-			return parseInt(value);
+			return parseInt(String(value));
 		};
-		const transformToNumber = value => {
+		const transformToNumber = (value: string) => {
 			const container = splitRef.value;
 			const rect = container.getBoundingClientRect();
 			let max = 0;
@@ -155,7 +156,8 @@ export default defineComponent({
 				return parseInt(value.replace('px', ''));
 			}
 			if (value.indexOf('%') !== -1) {
-				return parseInt((parseInt(value.replace('%', '')) * max) / 100);
+				const result = String((parseInt(value.replace('%', '')) * max) / 100);
+				return parseInt(result);
 			}
 			return null;
 		};

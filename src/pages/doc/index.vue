@@ -59,7 +59,7 @@ export default defineComponent({
 			}
 		};
 		// 置顶
-		const toTop = (val: string, id: string) => {
+		const toTop = (val: boolean, id: string) => {
 			if (activeItem.value.id === 'add') {
 				firstFile[0].isTop = val;
 			} else {
@@ -78,7 +78,7 @@ export default defineComponent({
 		const del = (id: string) => {
 			console.log('del: ', id);
 		};
-		const edit = id => {
+		const edit = (id: string) => {
 			router.replace({
 				name: route.name,
 				query: {
@@ -104,11 +104,13 @@ export default defineComponent({
 			const width = leftRef.value.getBoundingClientRect().width;
 			nameWidth.value = width;
 		});
-		const changeWidth = val => {
+		const changeWidth = (val: number) => {
 			nameWidth.value = val;
 		};
 		const nameStyle: any = computed(() => {
-			const style = {};
+			const style = {
+				width: '0',
+			};
 			style.width = nameWidth.value - 70 + 'px';
 			return style;
 		});
@@ -142,7 +144,7 @@ export default defineComponent({
 		<template v-slot:left>
 			<div class="left" ref="leftRef">
 				<div class="filter">
-					<el-input class="input" size="default" v-model="keyWord" :prefix-icon="Search" placeholder="搜索全部文档" />
+					<el-input class="input" size="default" maxlength="90" v-model="keyWord" :prefix-icon="Search" show-word-limit placeholder="搜索全部文档" />
 					<el-button type="primary" icon="Plus" circle @click="addFile" />
 				</div>
 				<ul class="menu">

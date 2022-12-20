@@ -40,8 +40,8 @@ export function removeEvent(el: any, event: string, handler: Function) {
 interface Options {
 	container: object;
 	event: MouseEvent;
-	handleMove: Function;
-	handleUp: Function;
+	handleMove?: Function;
+	handleUp?: Function;
 }
 export const mouseDown = function ({ container = document.documentElement, event, handleMove, handleUp }: Options) {
 	event.preventDefault();
