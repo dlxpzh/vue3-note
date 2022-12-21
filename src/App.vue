@@ -16,7 +16,7 @@ export default {
 			<router-view></router-view>
 		</div>
 		<div class="page-footer">
-			<p>*此项目由Dlxpzh开发及维护，其他人未经授权无权作为商业用途使用，违者必究！</p>
+			<p>*此项目由Dlxpzh开发及维护，其他人未经授权无权作为商业用途使用，违者必究！*</p>
 		</div>
 	</div>
 </template>
