@@ -14,7 +14,7 @@
 			<div class="date">{{ time }}</div>
 			<el-popover placement="right-end" :width="200" offset="-20" popper-class="popover" @before-enter="getWeather">
 				<template #reference>
-					<h4 class="address cursor" @click="toUrl('map')">{{ dateTime.address }}</h4>
+					<h4 class="address cursor" @click="toUrl('three')">{{ dateTime.address }}</h4>
 				</template>
 				<div class="weather">
 					<div class="wea">

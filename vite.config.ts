@@ -14,8 +14,10 @@ export default defineConfig({
 		}),
 		// vite支持markdown文件显示
 		viteMarkdown(),
-		// element按需加载
+		// vue/vue-router自动导入、element按需加载
 		AutoImport({
+			dts: resolve(__dirname, './src/auto-imports.d.ts'),
+			imports: ['vue', 'vue-router'],
 			resolvers: [ElementPlusResolver()],
 		}),
 		Components({

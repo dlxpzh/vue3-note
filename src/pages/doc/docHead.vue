@@ -11,66 +11,47 @@
 		</div>
 	</div>
 </template>
-<script lang="ts">
-import { defineComponent, reactive, ref, watch } from 'vue';
-export default defineComponent({
-	name: 'doc-head',
-	emits: ['updateMdName', 'star', 'toTop', 'del', 'edit'],
-	props: {
-		data: {
-			type: Object,
-		},
-	},
-	setup(props, { emit }) {
-		// 标题显示
-		const item: any = props.data;
-		const title = ref(item.name); //标题
-		const isStar = ref(item.isStar); // 是否加星
-		const isTop = ref(item.isTop); // 是否置顶
-		watch(
-			() => props.data,
-			(newVal: any) => {
-				title.value = newVal.name;
-				isStar.value = newVal.isStar;
-				isTop.value = newVal.isTop;
-			},
-			{
-				deep: true,
-			}
-		);
-		// 修改标题
-		const updateMdName = (val: string) => {
-			emit('updateMdName', val);
-		};
-		// 加星
-		const star = () => {
-			isStar.value = !isStar.value;
-			emit('star', isStar.value);
-		};
-		// 置顶
-		const toTop = () => {
-			isTop.value = !isTop.value;
-			emit('toTop', isTop.value);
-		};
-		// 删除
-		const del = () => {
-			emit('del', item.id);
-		};
-		const edit = () => {
-			emit('edit', item.id);
-		};
-		return {
-			title,
-			isStar,
-			isTop,
-			updateMdName,
-			star,
-			toTop,
-			del,
-			edit,
-		};
-	},
+<script lang="ts" setup>
+const props = defineProps({
+	data: Object,
 });
+const emit = defineEmits(['updateMdName', 'star', 'toTop', 'del', 'edit']);
+const item: any = props.data;
+const title = ref(item.name); //标题
+const isStar = ref(item.isStar); // 是否加星
+const isTop = ref(item.isTop); // 是否置顶
+watch(
+	() => props.data,
+	(newVal: any) => {
+		title.value = newVal.name;
+		isStar.value = newVal.isStar;
+		isTop.value = newVal.isTop;
+	},
+	{
+		deep: true,
+	}
+);
+// 修改标题
+const updateMdName = (val: string) => {
+	emit('updateMdName', val);
+};
+// 加星
+const star = () => {
+	isStar.value = !isStar.value;
+	emit('star', isStar.value);
+};
+// 置顶
+const toTop = () => {
+	isTop.value = !isTop.value;
+	emit('toTop', isTop.value);
+};
+// 删除
+const del = () => {
+	emit('del', item.id);
+};
+const edit = () => {
+	emit('edit', item.id);
+};
 </script>
 <style lang="less" scoped>
 .doc-head {
@@ -86,7 +67,7 @@ export default defineComponent({
 	.btn {
 		line-height: 36px;
 		.star {
-			/deep/.el-icon {
+			:deep(.el-icon) {
 				color: #ffff6d;
 			}
 		}

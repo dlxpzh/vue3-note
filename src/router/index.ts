@@ -26,6 +26,11 @@ const routes = [
 				name: 'weather',
 				component: () => import('../pages/home/weather.vue'),
 			},
+			{
+				path: 'three',
+				name: 'three',
+				component: () => import('../pages/three/index.vue'),
+			},
 		],
 	},
 	{

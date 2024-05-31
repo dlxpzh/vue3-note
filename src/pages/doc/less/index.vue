@@ -1,15 +1,6 @@
 <template>
 	<v-md-preview :text="md"></v-md-preview>
 </template>
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script lang="ts" setup>
 import md from './less.md?raw';
-export default defineComponent({
-	name: 'doc',
-	setup() {
-		return {
-			md,
-		};
-	},
-});
 </script>
